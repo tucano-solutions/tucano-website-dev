@@ -1,0 +1,10 @@
+/**
+ * Google Fonts are imported in the main HTML file. Whenever a font is added
+ * or updated, you should update both the import in the HTML and this file.
+ */
+
+/**
+ * Brand font. Most elements in the page, if not all, will use this font.
+ * @type {String}
+ */
+$main-font-family: 'Roboto Condensed', sans-serif;

@@ -1,0 +1,12 @@
+/**
+ * Semantic names for CSS breakpoints
+ */
+
+$min-landscape: 540px;
+$max-phone: 740px;
+$min-tablet: $max-phone + 1px;
+$max-tablet: 991px;
+$min-desktop: $max-tablet + 1px;
+$max-desktop: 1279px;
+$min-desktop-large: $max-desktop + 1px;
+$max-desktop-large: 1440px;

@@ -1,0 +1,26 @@
+{
+  "name": "tucano-website",
+  "version": "1.0.0",
+  "description": "Tucano commercial website sourcecode",
+  "main": "index.js",
+  "dependencies": {
+    "autoprefixer": "^7.2.5",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "node-sass": "^4.7.2",
+    "pug": "^2.0.0-rc.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "publish": "webpack --config dev/webpack.build.js && mv dist/index.html index.html",
+    "dev": "webpack-dev-server --config dev/webpack.dev.js",
+    "stage": "webpack-dev-server --config dev/webpack.build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tucano-solutions/tucano-solutions.github.io.git"
+  },
+  "author": "Tucano Solutions",
+  "license": "ISC",
+  "homepage": "http://tucanosolutions.com"
+}

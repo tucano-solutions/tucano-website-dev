@@ -1,0 +1,5 @@
+# NPM installed modules
+node_modules/
+
+# Compiled files folder
+dist/
