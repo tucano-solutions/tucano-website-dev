@@ -7,13 +7,14 @@ const watchify    = require('watchify')
 const sass        = require('gulp-sass')
 const babel       = require('gulp-babel')
 const browserify  = require('browserify')
+const concat      = require('gulp-concat')
+const inject      = require('gulp-inject')
 const rename      = require('gulp-rename')
 const uglify      = require('gulp-uglify')
 const buffer      = require('vinyl-buffer')
 const postcss     = require('gulp-postcss')
 const standard    = require('gulp-standard')
 const sourcemaps  = require('gulp-sourcemaps')
-const collect     = require('gulp-rev-collector')
 const source      = require('vinyl-source-stream')
 const browserSync = require('browser-sync').create()
 
@@ -32,7 +33,7 @@ const tmp = path.resolve(root, 'tmp')
 const src = path.resolve(root, 'src')
 const jsFiles = path.resolve(src, '**/*.js')
 const scssFiles = path.resolve(src, '**/*.scss')
-const viewFiles = path.resolve(src, '**/*.pug')
+const viewFiles = path.resolve(src, 'index.pug')
 const revManifest = path.resolve(tmp, 'rev-manifest.json')
 
 // Aliases
@@ -68,8 +69,6 @@ gulp.task('build:js', _ => {
     .pipe(uglify())
     .on('error', log.error)
     .pipe(rev())
-    .pipe(gulp.dest(tmp))
-    .pipe(rev.manifest(revOptions))
     .pipe(gulp.dest(tmp))
 })
 
@@ -116,9 +115,8 @@ gulp.task('build:css', _ => {
     .pipe(sass())
     .pipe(postcss(plugins))
     .pipe(rename({dirname: ''}))
+    .pipe(concat('styles.css'))
     .pipe(rev())
-    .pipe(gulp.dest(tmp))
-    .pipe(rev.manifest(revOptions))
     .pipe(gulp.dest(tmp))
 })
 
@@ -141,7 +139,7 @@ gulp.task('watch:js', done => {
 })
 
 gulp.task('watch:views', done => {
-  gulp.watch(viewFiles, gulp.series('dev:views'))
+  gulp.watch(viewFiles, gulp.series('dev:views', 'inject'))
   done()
 })
 
@@ -171,15 +169,17 @@ gulp.task('dev:browser-sync', done => {
   done()
 })
 
-// ============= FILE REVISION TASKS =============
-gulp.task('revision', _ =>
-   gulp.src([
-     revManifest,
-     path.resolve(tmp, '*.html')
-   ])
-     .pipe(collect())
-     .pipe(gulp.dest(tmp))
-)
+// ============= FILE INJECTION TASKS ============
+
+gulp.task('inject', _ => {
+  const sources = gulp.src([
+    path.resolve(tmp, '*.js'),
+    path.resolve(tmp, '*.css')
+  ], {read: false})
+  return gulp.src(path.resolve(tmp, 'index.html'))
+    .pipe(inject(sources, {relative: true}))
+    .pipe(gulp.dest(tmp))
+})
 
 // ========== PROJECT COMPILATION TASKS ==========
 gulp.task('dev',
@@ -187,7 +187,8 @@ gulp.task('dev',
     'clean:local',
     'lint:js',
     gulp.parallel('dev:js', 'dev:views', 'dev:css'),
-    gulp.parallel('watch', 'dev:browser-sync')
+    gulp.parallel('watch', 'dev:browser-sync'),
+    'inject'
   )
 )
 
@@ -196,7 +197,7 @@ gulp.task('build',
     'clean:local',
     'lint:js',
     gulp.parallel('build:js', 'build:views', 'build:css'),
-    'revision'
+    'inject'
   )
 )
 
