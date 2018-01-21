@@ -5,22 +5,45 @@
   "main": "index.js",
   "dependencies": {
     "autoprefixer": "^7.2.5",
-    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "node-sass": "^4.7.2",
-    "pug": "^2.0.0-rc.4"
+    "browserify": "^15.2.0",
+    "css-mqpacker": "^6.0.1",
+    "cssnano": "^3.10.0",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-pug": "^3.3.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-rev": "^8.1.1",
+    "gulp-rev-collector": "^1.2.4",
+    "gulp-sass": "^3.1.0",
+    "gulp-standard": "^10.1.1",
+    "gulp-uglify": "^3.0.0",
+    "gulplog": "^1.0.0",
+    "pug": "^2.0.0-rc.4",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.23.5",
+    "gulp-sourcemaps": "^2.6.3",
+    "watchify": "^3.9.0"
+  },
   "scripts": {
-    "publish": "webpack --config dev/webpack.build.js && mv dist/index.html index.html",
-    "dev": "webpack-dev-server --config dev/webpack.dev.js",
-    "stage": "webpack-dev-server --config dev/webpack.build.js"
+    "publish": "export NODE_ENV=production && node_modules/gulp/bin/gulp.js publish",
+    "dev": "export NODE_ENV=development && node_modules/gulp/bin/gulp.js dev",
+    "stage": "export NODE_ENV=production && node_modules/gulp/bin/gulp.js stage"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/tucano-solutions/tucano-solutions.github.io.git"
   },
-  "author": "Tucano Solutions",
-  "license": "ISC",
+  "contributors": [
+    "Mario Retana <mretana@tucanosolutions.com> (https://github.com/maretana)",
+    "Kenneth Meza <kmeza@tucanosolutions.com> (https://github.com/keme040994)"
+  ],
+  "license": "UNLICENSED",
   "homepage": "http://tucanosolutions.com"
 }
