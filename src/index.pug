@@ -10,11 +10,16 @@ html(lang="es")
     //- ============ THIRD PARTY SOURCES ============
     //- TODO: Add third-party sources here if needed (e.g. CDN files)
       
-    //- GOOGLE FONTS - ROBOTO
-    link(href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet")
+    //- GOOGLE FONTS - Shrikhand
+    link(href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet")
     //- ============ THIRD PARTY SOURCES ============
   body
-    include sections/landing/landing
-    include sections/about/about
+    //- include sections/landing/landing
+    //- include sections/about/about
+    .message-container
+      .logo-placeholder
+        .logo-container
+          img.logo-img(src='tucano_construction.png')
+      p.message Site under construction. Check back soon!
     // inject:js
     // endinject

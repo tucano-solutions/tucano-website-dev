@@ -153,6 +153,7 @@ gulp.task('watch', gulp.parallel(
 // ================= CLEAN TASKS =================
 gulp.task('clean:local', _ => del(tmp))
 
+// TODO: Update this to remove only the files that are no longer part of the build, instead of deleting everything.
 gulp.task('clean:publish', _ => del([
   path.resolve(publishFolder, '*.*'),
   `!${path.resolve(publishFolder, 'README.md')}`
@@ -162,6 +163,11 @@ gulp.task('clean:publish', _ => del([
 gulp.task('copy:publish', _ =>
   gulp.src(path.resolve(tmp, '*.*'))
     .pipe(gulp.dest(publishFolder))
+)
+
+gulp.task('copy:images', _ =>
+  gulp.src(path.resolve(src, 'images/**/*.*'))
+    .pipe(gulp.dest(tmp))
 )
 
 // ============== BROWSER SYNC TASKS =============
@@ -229,7 +235,7 @@ gulp.task('dev',
   gulp.series(
     'clean:local',
     'lint:js',
-    gulp.parallel('dev:js', 'dev:views', 'dev:css'),
+    gulp.parallel('dev:js', 'dev:views', 'dev:css', 'copy:images'),
     gulp.parallel('watch', 'dev:browser-sync'),
     'inject'
   )
@@ -239,7 +245,7 @@ gulp.task('build',
   gulp.series(
     'clean:local',
     'lint:js',
-    gulp.parallel('build:js', 'build:views', 'build:css'),
+    gulp.parallel('build:js', 'build:views', 'build:css', 'copy:images'),
     'inject'
   )
 )
