@@ -198,7 +198,7 @@ gulp.task('git:pull', _ =>
   exec('git pull', {cwd: publishFolder}, execCb)
 )
 
-gulp.task('git:commit', done => {
+gulp.task('git:commit', _ => {
   const schema = {
     properties: {
       commitMessage: {
@@ -207,10 +207,16 @@ gulp.task('git:commit', done => {
       }
     }
   }
-  prompt.start()
-  prompt.get(schema, (err, { commitMessage }) => {
-    exec(`git add -A && git commit -am "${commitMessage}"`, {cwd: publishFolder}, execCb)
-    done()
+  return new Promise((resolve, reject) => {
+    prompt.start()
+    prompt.get(schema, (err, { commitMessage }) => {
+      exec(`git add -A && git commit -am "${commitMessage}"`, {cwd: publishFolder},
+        (error, stdout, stderr) => {
+          execCb(error, stdout, stderr)
+          resolve()
+        }
+      )
+    })
   })
 })
 
