@@ -21,6 +21,8 @@ const browserSync = require('browser-sync').create()
 // Node.js packages
 const del = require('del')
 const path = require('path')
+const exec = require('child_process').exec
+const prompt = require('prompt')
 
 // PostCSS packages
 const autoprefixer = require('autoprefixer')
@@ -28,22 +30,16 @@ const cssnano = require('cssnano')
 const mqpacker = require('css-mqpacker')
 
 // Common paths
-const root = __dirname
-const tmp = path.resolve(root, 'tmp')
-const src = path.resolve(root, 'src')
+const tmp = path.resolve(__dirname, 'tmp')
+const src = path.resolve(__dirname, 'src')
 const jsFiles = path.resolve(src, '**/*.js')
 const scssFiles = path.resolve(src, '**/*.scss')
 const viewFiles = path.resolve(src, 'index.pug')
-const revManifest = path.resolve(tmp, 'rev-manifest.json')
+const publishFolder = path.resolve(__dirname, '../tucano-solutions.github.io')
 
 // Aliases
 const reload = browserSync.reload
 const isProduction = process.env.NODE_ENV === 'production'
-const revOptions = {
-  base: tmp,
-  merge: true,
-  path: revManifest
-}
 
 // =================== JS TASKS ==================
 gulp.task('lint:js', _ => {
@@ -157,6 +153,17 @@ gulp.task('watch', gulp.parallel(
 // ================= CLEAN TASKS =================
 gulp.task('clean:local', _ => del(tmp))
 
+gulp.task('clean:publish', _ => del([
+  path.resolve(publishFolder, '*.*'),
+  `!${path.resolve(publishFolder, 'README.md')}`
+], {force: true}))
+
+// ================== COPY TASKS =================
+gulp.task('copy:publish', _ =>
+  gulp.src(path.resolve(tmp, '*.*'))
+    .pipe(gulp.dest(publishFolder))
+)
+
 // ============== BROWSER SYNC TASKS =============
 gulp.task('dev:browser-sync', done => {
   browserSync.init({
@@ -180,6 +187,36 @@ gulp.task('inject', _ => {
     .pipe(inject(sources, {relative: true}))
     .pipe(gulp.dest(tmp))
 })
+
+// ================== GIT TASKS ==================
+const execCb = (error, stdout, stderr) => {
+  error !== null && log.error(error) && process.exit(1)
+  stdout && console.log(stdout)
+  stderr && log.error(stderr)
+}
+gulp.task('git:pull', _ =>
+  exec('git pull', {cwd: publishFolder}, execCb)
+)
+
+gulp.task('git:commit', done => {
+  const schema = {
+    properties: {
+      commitMessage: {
+        description: 'Enter a commit message',
+        required: true
+      }
+    }
+  }
+  prompt.start()
+  prompt.get(schema, (err, { commitMessage }) => {
+    exec(`git add -A && git commit -am "${commitMessage}"`, {cwd: publishFolder}, execCb)
+    done()
+  })
+})
+
+gulp.task('git:push', _ =>
+  exec('git push', {cwd: publishFolder}, execCb)
+)
 
 // ========== PROJECT COMPILATION TASKS ==========
 gulp.task('dev',
@@ -205,5 +242,16 @@ gulp.task('stage',
   gulp.series(
     'build',
     'dev:browser-sync'
+  )
+)
+
+gulp.task('publish',
+  gulp.series(
+    'build',
+    'git:pull',
+    'clean:publish',
+    'copy:publish',
+    'git:commit',
+    'git:push'
   )
 )
