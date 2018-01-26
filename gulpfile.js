@@ -1,21 +1,21 @@
 // Gulp packages
-const gulp        = require('gulp')
-const log         = require('gulplog')
-const pug         = require('gulp-pug')
-const rev         = require('gulp-rev')
-const watchify    = require('watchify')
-const sass        = require('gulp-sass')
-const babel       = require('gulp-babel')
-const browserify  = require('browserify')
-const concat      = require('gulp-concat')
-const inject      = require('gulp-inject')
-const rename      = require('gulp-rename')
-const uglify      = require('gulp-uglify')
-const buffer      = require('vinyl-buffer')
-const postcss     = require('gulp-postcss')
-const standard    = require('gulp-standard')
-const sourcemaps  = require('gulp-sourcemaps')
-const source      = require('vinyl-source-stream')
+const gulp = require('gulp')
+const log = require('gulplog')
+const pug = require('gulp-pug')
+const rev = require('gulp-rev')
+const watchify = require('watchify')
+const sass = require('gulp-sass')
+const babel = require('gulp-babel')
+const browserify = require('browserify')
+const concat = require('gulp-concat')
+const inject = require('gulp-inject')
+const rename = require('gulp-rename')
+const uglify = require('gulp-uglify')
+const buffer = require('vinyl-buffer')
+const postcss = require('gulp-postcss')
+const standard = require('gulp-standard')
+const sourcemaps = require('gulp-sourcemaps')
+const source = require('vinyl-source-stream')
 const browserSync = require('browser-sync').create()
 
 // Node.js packages
@@ -216,6 +216,7 @@ gulp.task('git:commit', _ => {
   return new Promise((resolve, reject) => {
     prompt.start()
     prompt.get(schema, (err, { commitMessage }) => {
+      err && log.error(err)
       exec(`git add -A && git commit -am "${commitMessage}"`, {cwd: publishFolder},
         (error, stdout, stderr) => {
           execCb(error, stdout, stderr)
