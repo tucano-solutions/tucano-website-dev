@@ -1,9 +1,10 @@
 {
-  "name": "tucano-website",
+  "name": "tucano-website-dev",
   "version": "1.0.0",
-  "description": "Tucano commercial website sourcecode",
+  "description": "Source files and dev tools to develop our organization website.",
   "main": "index.js",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "autoprefixer": "^7.2.5",
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -26,21 +27,19 @@
     "prompt": "^1.0.0",
     "pug": "^2.0.0-rc.4",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
-  },
-  "devDependencies": {
+    "vinyl-source-stream": "^2.0.0",
     "browser-sync": "^2.23.5",
     "gulp-sourcemaps": "^2.6.3",
     "watchify": "^3.9.0"
   },
   "scripts": {
-    "publish": "export NODE_ENV=production && node_modules/gulp/bin/gulp.js publish",
-    "dev": "export NODE_ENV=development && node_modules/gulp/bin/gulp.js dev",
-    "stage": "export NODE_ENV=production && node_modules/gulp/bin/gulp.js stage"
+    "publish": "export NODE_ENV=production && npx gulp publish",
+    "dev": "export NODE_ENV=development && npx gulp dev",
+    "stage": "export NODE_ENV=production && npx gulp stage"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tucano-solutions/tucano-solutions.github.io.git"
+    "url": "https://github.com/tucano-solutions/tucano-website-dev.git"
   },
   "contributors": [
     "Mario Retana <mretana@tucanosolutions.com> (https://github.com/maretana)",
