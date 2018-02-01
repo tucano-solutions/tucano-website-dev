@@ -1,3 +1,5 @@
+[![dependencies Status](https://david-dm.org/tucano-solutions/tucano-website-dev/status.svg)](https://david-dm.org/tucano-solutions/tucano-website-dev)
+[![devDependencies Status](https://david-dm.org/tucano-solutions/tucano-website-dev/dev-status.svg)](https://david-dm.org/tucano-solutions/tucano-website-dev?type=dev)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 # Tucano Website Development
