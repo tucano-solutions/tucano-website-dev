@@ -7,4 +7,52 @@
 //     is where the majority of your work will happen after initial project
 //     set-up. Adding new components and features usually makes up the vast
 //     majority of development.
-@import 'section.components';
+//
+.message-container {
+  margin: 25px auto;
+  background-color: #101010;
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+
+  @media (min-width: $min-landscape) {
+    margin: 50px auto;
+    min-width: 350px;
+    min-height: 350px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.logo-placeholder {
+  width:100%;
+  max-width: 350px;
+  margin: auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.logo-container {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background-color: #6f341f;
+}
+
+.logo-img {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.message {
+  padding: 40px 0;
+  text-align: center;
+  color: darken(white, 5%);
+  font-size: 38px;
+
+  @media (min-width: $min-landscape) {
+    font-size: 45px;
+  }
+}

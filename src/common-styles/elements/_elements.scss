@@ -10,3 +10,7 @@
 //     find bare, element-based selectors, and is very rarely added to or changed
 //     after initial setup. Once we have defined element-level styles, all
 //     additions and deviations should be implemented using classes.
+
+body {
+  background-color: #ffdd2c;
+}
