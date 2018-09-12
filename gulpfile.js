@@ -34,7 +34,7 @@ const tmp = path.resolve(__dirname, 'tmp')
 const src = path.resolve(__dirname, 'src')
 const jsFiles = path.resolve(src, '**/*.js')
 const scssFiles = path.resolve(src, '**/*.scss')
-const viewFiles = path.resolve(src, 'index.pug')
+const viewFiles = path.resolve(src, '**/*.pug')
 const publishFolder = path.resolve(__dirname, '../tucano-solutions.github.io')
 
 // Aliases
